@@ -1,21 +1,14 @@
 'use client';
 
-import * as anchor from "@coral-xyz/anchor";
-import { Keypair, Connection, PublicKey } from "@solana/web3.js";
-//import { Program, web3 } from "@coral-xyz/anchor";
 import {
     AnchorProvider,
-    setProvider,
     Program,
-    Idl,
 } from "@coral-xyz/anchor";
 import idl from "../../../target/idl/mycounter.json"; // Replace with the path to your IDL file
 import { Mycounter } from "../../../target/types/mycounter";
 import { useAnchorWallet, useConnection, useWallet } from "@solana/wallet-adapter-react";
 
-import { getProgram } from '../anchorClient';
 import { web3 } from "@coral-xyz/anchor";
-import Child from './childComp';
 
 import React, { useMemo } from 'react';
 import { WalletProvider } from '@solana/wallet-adapter-react';
@@ -28,8 +21,6 @@ import { PhantomWalletAdapter, UnsafeBurnerWalletAdapter } from '@solana/wallet-
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { clusterApiUrl } from '@solana/web3.js';
 import '@solana/wallet-adapter-react-ui/styles.css';
-
-const wallets = [new UnsafeBurnerWalletAdapter()];
 
 const App: React.FC = () => {
     // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
@@ -83,15 +74,8 @@ function Home() {
         return;
     }
     console.log("wallet", wallet);
-    //const wallet = new Wallet(walletKeypair);
     const provider = new AnchorProvider(connection, wallet, {});
-    //setProvider(provider);
-    //anchor.setProvider(provider);
-    //const program = anchor.workspace.Mycounter as Program<Mycounter>;
-    //const programId = new PublicKey(idl.address);
-    //const program = new Program(idl as Idl, provider);
     const program = new Program(idl as Mycounter, provider);
-    //const program = getProgram();
     if (!program) {
         console.log("Program not found");
         return;
@@ -111,11 +95,6 @@ function Home() {
                 })
                 .signers([counterAccount])
                 .rpc();
-            //const tx = await program.rpc.yourMethodName({
-            //    accounts: {
-            //        // Specify your accounts here
-            //    },
-            //});
             console.log('Transaction successful:', tx);
         } catch (error) {
             console.error('Transaction failed:', error);
@@ -130,16 +109,8 @@ function Home() {
                 .increment()
                 .accounts({
                     counter: counterAccount.publicKey,
-                    //user: program.provider.publicKey || "",
-                    //systemProgram: anchor.web3.SystemProgram.programId,
                 })
-                //.signers([counterAccount])
                 .rpc();
-            //const tx = await program.rpc.yourMethodName({
-            //    accounts: {
-            //        // Specify your accounts here
-            //    },
-            //});
             console.log('Transaction successful:', tx);
         } catch (error) {
             console.error('Transaction failed:', error);
@@ -154,16 +125,8 @@ function Home() {
                 .decrement()
                 .accounts({
                     counter: counterAccount.publicKey,
-                    //user: program.provider.publicKey || "",
-                    //systemProgram: anchor.web3.SystemProgram.programId,
                 })
-                //.signers([counterAccount])
                 .rpc();
-            //const tx = await program.rpc.yourMethodName({
-            //    accounts: {
-            //        // Specify your accounts here
-            //    },
-            //});
             console.log('Transaction successful:', tx);
         } catch (error) {
             console.error('Transaction failed:', error);

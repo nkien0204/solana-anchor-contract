@@ -1,7 +1,12 @@
 .anchor
 .DS_Store
-target
+!target/idl/mycounter.json
+!target/types/mycounter.ts
+target/debug
+target/release
+target/deploy
+target/sbf-solana-solana
 **/*.rs.bk
 node_modules
 test-ledger
-.yarn
+.yarn   
