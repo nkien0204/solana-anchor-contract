@@ -1,7 +1,5 @@
 .anchor
 .DS_Store
-!target/idl/mycounter.json
-!target/types/mycounter.ts
 target/debug
 target/release
 target/deploy
